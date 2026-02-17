@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Wesele Martyna & Mateusz</title>
+
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #3f8ae0; /* delikatny różowy */
+          text-align: center;
+          padding: 20px;
+        }
+      
+        h1 {
+          color: #d61e1e;
+        }
+      
+        p {
+          color: #000000;
+        }
+      
+        #zdjecieInput {
+          margin: 20px 0;
+          padding: 10px;
+          border-radius: 8px;
+          border: 1px solid #ccc;
+          cursor: pointer;
+        }
+        /* ukrywamy standardowy input */
+        #zdjecieInput {
+        display: none;
+        }
+
+        /* stylizacja nowego przycisku */
+        .custom-file-upload {
+        display: inline-block;
+        padding: 10px 20px;
+        cursor: pointer;
+        background-color: #d6336c;
+        color: white;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+        }
+
+        .custom-file-upload:hover {
+        background-color: #ff4081;
+        }
+        /* Podgląd zdjęć */
+        #podglad {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        }
+
+        #podglad img {
+        margin: 10px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        max-width: 250px;
+        height: auto;
+}
+
+      </style>      
+  </head>
+  <body>
+    <h1>Witamy na naszym weselu 🎉</h1>
+    <p>Dodaj swoje zdjęcia z imprezy!</p>
+    <p>Wszystkie mile widziane!</p>
+    <p>Kliknij poniżej aby dodać zdjęcie!</p>
+     <!-- Input do wyboru zdjęcia -->
+     <label for="zdjecieInput" class="custom-file-upload">
+  📸 Dodaj zdjęcie
+     </label>
+
+    <input type="file" id="zdjecieInput">
+
+     <!-- Tu pojawi się podgląd zdjęcia -->
+     <div id="podglad"></div>
+
+     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+     <!-- JavaScript -->
+     <script>
+        const supabaseUrl = "https://yurvaqkqdnckqobembdf.supabase.co";
+        const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1cnZhcWtxZG5ja3FvYmVtYmRmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjE2NzMsImV4cCI6MjA4NjkzNzY3M30.hA9XmC3VxM2fj3hNiCgmBKlob6sJioY0OuX4uIQA_7U";
+        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+        
+        const input = document.getElementById('zdjecieInput');
+        const podglad = document.getElementById('podglad');
+
+        // Wczytaj galerię z Supabase przy starcie strony
+        async function loadGallery() {
+        const { data, error } = await supabaseClient
+        .from("photos")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+        if (error) {
+        console.error("Błąd wczytywania galerii:", error);
+        return;
+  }
+
+  data.forEach(photo => {
+    const img = document.createElement('img');
+    img.src = photo.image_url;
+    podglad.appendChild(img);
+  });
+}
+
+loadGallery();
+
+        
+        input.addEventListener('change', function() {
+          const file = input.files[0];
+          if (!file) return;
+        
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append("upload_preset", "wesele_upload");
+          formData.append("folder", "wesele");
+        
+          fetch("https://api.cloudinary.com/v1_1/dftb2kloa/image/upload", {
+            method: "POST",
+            body: formData
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.error) {
+              console.error("Cloudinary error:", data.error);
+              alert("Nie udało się wysłać zdjęcia.");
+              return;
+            }
+        
+            const img = document.createElement('img');
+            img.src = data.secure_url;
+            img.alt = "Zdjęcie z wesela";
+            podglad.appendChild(img);
+        
+            supabaseClient
+              .from("photos")
+              .insert([{ image_url: data.secure_url }])
+              .then(res => {
+                if (res.error) console.error("Supabase error:", res.error);
+              });
+        
+            input.value = "";
+          })
+          .catch(error => {
+            console.error("Błąd uploadu:", error);
+          });
+        });
+        </script>
+               
+  </body>
+</html>
