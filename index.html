@@ -3,8 +3,61 @@
   <head>
     <meta charset="UTF-8">
     <title>Wesele Martyna & Mateusz</title>
-
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">  
     <style>
+  ul {
+  list-style: none;
+  padding: 0;
+}
+body {
+  margin: 0;
+  background: url("tlo.jpg") center/cover no-repeat fixed;
+}
+html {
+  scroll-behavior: smooth;
+}
+/* półprzezroczyste sekcje */
+.section, .hero {
+  background: rgba(255,255,255,0.9);
+  padding: 30px;
+  margin: 20px auto;
+  border-radius: 20px;
+  max-width: 900px;
+  margin-top: 20px;
+}
+
+/* ukryte sekcje */
+.section {
+  display: none;
+}
+/* przyciski menu */
+.menu-buttons button {
+  /* background: linear-gradient(135deg, #e6c07b, #d4a24f); */
+  background: #e8cfa8;
+  border: none;
+  /* color: white; */
+  color: #5a4632;
+  padding: 12px 24px;
+  margin: 10px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+  transition: all 0.25s ease;
+}
+
+/* Hover */
+.menu-buttons button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(214,51,108,0.4);
+}
+
+/* Klik */
+.menu-buttons button:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 10px rgba(214,51,108,0.25);
+}
         body {
           font-family: Arial, sans-serif;
           background-color: #3f8ae0; /* delikatny różowy */
@@ -49,41 +102,453 @@
         }
         /* Podgląd zdjęć */
         #podglad {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        }
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 15px;
+        margin-top: 20px;
+      }
 
-        #podglad img {
-        margin: 10px;
-        border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        max-width: 250px;
-        height: auto;
+#podglad img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease;
+  display: block;
 }
 
-      </style>      
+#podglad img:hover {
+  transform: scale(1.03);
+}
+.event {
+  background: white;
+  padding: 20px;
+  margin: 15px 0;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease;
+}
+.event:hover {
+  transform: translateY(-3px);
+}
+.time {
+  display: block;
+  font-weight: 600;
+  color: #d6336c;
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+
+.description {
+  font-size: 17px;
+  color: #444;
+}
+.menu-block {
+  margin-top: 30px;
+}
+
+.menu-block h3 {
+  color: #d6336c;
+  margin-bottom: 15px;
+  font-size: 22px;
+}
+
+.menu-block p {
+  font-size: 18px;
+  color: #444;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+h1, h2 {
+  font-family: 'Playfair Display', serif;
+}
+.section {
+  display: none;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.section.active {
+  display: block;
+  animation: fadeSlide 0.5s ease forwards;
+}
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* LIGHTBOX */
+
+#lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+#lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 14px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 32px;
+  color: white;
+  background: rgba(0,0,0,0.35);
+  border: none;
+  border-radius: 50%;
+  padding: 12px 16px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: all 0.25s ease;
+}
+
+/* Hover */
+.nav-btn:hover {
+  background: rgba(0,0,0,0.6);
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Lewa/prawa strzałka */
+#prevBtn { left: 20px; }
+#nextBtn { right: 20px; }
+#closeBtn {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 30px;
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  z-index: 10000;
+}
+@media (max-width: 700px) {
+  .nav-btn {
+    font-size: 26px;
+    padding: 10px 14px;
+  }
+}
+/* Overlay uploadu */
+#uploadOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 99999;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  color: white;
+  font-size: 20px;
+  text-align: center;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+#uploadOverlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+/* Spinner */
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255,255,255,0.3);
+  border-top: 5px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+    display: block;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.upload-text {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.upload-icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+#uploadOverlay p {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 5px 0;
+}
+
+#uploadOverlay small {
+  font-size: 14px;
+  opacity: 0.8;
+}
+@media (max-width: 700px) {
+  h1 {
+    font-size: 26px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  p {
+    font-size: 16px;
+  }
+}
+@media (max-width: 600px) {
+  #podglad {
+    gap: 10px;
+  }
+
+  #podglad img {
+    border-radius: 10px;
+  }
+}
+@media (max-width: 700px) {
+  .nav-btn {
+    font-size: 30px;
+    padding: 8px 14px;
+  }
+
+  #closeBtn {
+    font-size: 36px;
+    top: 10px;
+    right: 15px;
+  }
+}
+@media (max-width: 700px) {
+  .menu-buttons button {
+    font-size: 18px;
+    padding: 16px;
+    border-radius: 40px;
+  }
+}
+/* ================= HERO ================= */
+
+.hero-header {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  padding: 20px;
+  color: white;
+  isolation: isolate;
+}
+
+/* Delikatne przyciemnienie tła */
+.hero-header::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: -1;
+}
+
+.hero-text,
+.menu-buttons {
+  position: relative;
+  z-index: 1;
+  margin-top: 35px;
+}
+
+.hero-header h1 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 90px;
+  margin: 0;
+  color: #f5e6c8; /* ciepłe złoto */
+  text-shadow: 0 6px 25px rgba(0,0,0,0.5);
+}
+
+.heart {
+  font-size: 40px;
+  margin: 15px 0;
+  color: #e889a7; /* dusty rose */
+}
+
+.date {
+  font-size: 22px;
+  letter-spacing: 5px;
+  margin-bottom: 20px;
+  color: #fdf3e7;
+}
+
+.hero-text p {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  line-height: 1.8;
+  max-width: 700px;
+  margin: 0 auto;
+  color: #f8f5f2;
+  text-shadow: 0 3px 10px rgba(0,0,0,0.5);
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+  .hero-header h1 {
+    font-size: 55px;
+  }
+
+  .hero-text p {
+    font-size: 16px;
+  }
+
+}
+      </style>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">  
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">  
   </head>
   <body>
-    <h1>Witamy na naszym weselu 🎉</h1>
+<div class="hero-header">
+
+  <div class="hero-text">
     <h1>Martyna & Mateusz</h1>
-    <p>Dodaj swoje zdjęcia z imprezy!</p>
-    <p>Wszystkie mile widziane!</p>
-    <p>Kliknij poniżej aby dodać zdjęcie!</p>
-     <!-- Input do wyboru zdjęcia -->
-     <label for="zdjecieInput" class="custom-file-upload">
-  📸 Dodaj zdjęcie
-     </label>
+    <div class="heart">❤</div>
+    <div class="date">06.06.2026</div>
 
-    <input type="file" id="zdjecieInput">
+    <p>
+      Witamy na naszej weselnej stronie.<br>
+      Cieszymy się, że możemy dzielić ten wyjątkowy dzień właśnie z Wami.<br>
+      Niech pozostanie pięknym wspomnieniem na długie lata.
+    </p>
+  </div>
+  <div class="menu-buttons">
+    <button onclick="showSection('galeria')">📸 Galeria</button>
+    <button onclick="showSection('harmonogram')">🕒 Harmonogram</button>
+    <button onclick="showSection('menu')">🍽️ Menu</button>
+  </div>
+</div>
+<div id="galeria" class="section">
+  <h2>Galeria weselna</h2>
 
+  <label for="zdjecieInput" class="custom-file-upload">
+    📸 Dodaj zdjęcie
+  </label>
+
+  <input type="file" id="zdjecieInput">
+  <div id="podglad"></div>
+</div>
+<div id="harmonogram" class="section">
+  <h2>Harmonogram wesela</h2>
+
+  <div class="event">
+    <span class="time">15:00</span>
+    <span class="description">Ceremonia ślubna</span>
+  </div>
+
+  <div class="event">
+    <span class="time">16:30</span>
+    <span class="description">Zdjęcia z gośćmi</span>
+  </div>
+
+  <div class="event">
+    <span class="time">18:00</span>
+    <span class="description">Pierwszy taniec</span>
+  </div>
+
+  <div class="event">
+    <span class="time">20:00</span>
+    <span class="description">Tort weselny</span>
+  </div>
+
+  <div class="event">
+    <span class="time">23:30</span>
+    <span class="description">Oczepiny</span>
+  </div>
+</div>
+<div id="menu" class="section">
+  <h2>Menu weselne</h2>
+
+  <div class="menu-block">
+    <h3>Dania gorące</h3>
+
+    <div class="event">
+      <span class="time">17:00</span>
+      <span class="description">Rosół + drugie danie</span>
+    </div>
+
+    <div class="event">
+      <span class="time">19:30</span>
+      <span class="description">Danie gorące II</span>
+    </div>
+
+    <div class="event">
+      <span class="time">22:00</span>
+      <span class="description">Danie gorące III</span>
+    </div>
+  </div>
+
+  <div class="menu-block">
+    <h3>Stoły tematyczne</h3>
+    <p>
+      Stół wiejski, słodki stół oraz przekąski zimne dostępne przez całą noc.
+    </p>
+  </div>
+</div>
      <!-- Tu pojawi się podgląd zdjęcia -->
      <div id="podglad"></div>
 
-     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.js"></script>
      <!-- JavaScript -->
      <script>
+      function showSection(sectionId) {
+      document.querySelectorAll(".section").forEach(sec => {
+    sec.classList.remove("active");
+    window.scrollTo({
+  top: 0,
+  behavior: "smooth"
+});
+  });
+
+  document.getElementById(sectionId).classList.add("active");
+}
+      let currentIndex = 0;
         const supabaseUrl = "https://yurvaqkqdnckqobembdf.supabase.co";
         const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1cnZhcWtxZG5ja3FvYmVtYmRmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjE2NzMsImV4cCI6MjA4NjkzNzY3M30.hA9XmC3VxM2fj3hNiCgmBKlob6sJioY0OuX4uIQA_7U";
         const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
@@ -107,18 +572,31 @@
     const img = document.createElement('img');
     img.src = photo.image_url;
     podglad.appendChild(img);
+    img.onclick = () => openLightbox(img.src);
   });
 }
 
 loadGallery();
 
         
-        input.addEventListener('change', function() {
+        input.addEventListener('change', async function() {
           const file = input.files[0];
           if (!file) return;
-        
+          document.getElementById("uploadOverlay").classList.add("active");
+
+// KOMPresja zdjęcia
+const options = {
+  maxSizeMB: 1,
+  maxWidthOrHeight: 1920,
+  useWebWorker: true
+};
+
+const compressedFile = await imageCompression(file, options);
+
+console.log("Original:", (file.size/1024/1024).toFixed(2), "MB");
+console.log("Compressed:", (compressedFile.size/1024/1024).toFixed(2), "MB");
           const formData = new FormData();
-          formData.append("file", file);
+          formData.append("file", compressedFile);
           formData.append("upload_preset", "wesele_upload");
           formData.append("folder", "wesele");
         
@@ -137,24 +615,111 @@ loadGallery();
             const img = document.createElement('img');
             img.src = data.secure_url;
             img.alt = "Zdjęcie z wesela";
-            podglad.appendChild(img);
-        
+
+            img.onclick = () => openLightbox(img.src);
+
+            podglad.appendChild(img);        
             supabaseClient
               .from("photos")
               .insert([{ image_url: data.secure_url }])
               .then(res => {
                 if (res.error) console.error("Supabase error:", res.error);
+                document.getElementById("uploadOverlay").classList.remove("active");
               });
         
             input.value = "";
           })
           .catch(error => {
             console.error("Błąd uploadu:", error);
+            document.getElementById("uploadOverlay").classList.remove("active");
           });
         });
+function showSection(sectionId) {
+  document.querySelectorAll(".section").forEach(sec => {
+    sec.classList.remove("active");
+  });
+
+  document.getElementById(sectionId).classList.add("active");
+  document.getElementById(sectionId).scrollIntoView({
+  behavior: "smooth"
+});
+}
+// GLOBALNA funkcja wywoływana po kliknięciu zdjęcia
+function openLightbox(src) {
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+
+  const images = Array.from(document.querySelectorAll("#podglad img"));
+  currentIndex = images.findIndex(img => img.src === src);
+
+  lightbox.style.display = "flex";
+  lightboxImg.src = images[currentIndex].src;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const closeBtn = document.getElementById("closeBtn");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+
+  // Zamknięcie przyciskiem X
+  closeBtn.onclick = e => {
+    e.stopPropagation();
+    lightbox.style.display = "none";
+  };
+
+  // Klik w tło zamyka
+  lightbox.onclick = () => {
+    lightbox.style.display = "none";
+  };
+
+  // Klik zdjęcia NIE zamyka
+  lightboxImg.onclick = e => {
+    e.stopPropagation();
+  };
+
+  // Strzałka w lewo
+  prevBtn.onclick = e => {
+    e.stopPropagation();
+    const images = document.querySelectorAll("#podglad img");
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    lightboxImg.src = images[currentIndex].src;
+  };
+
+  // Strzałka w prawo
+  nextBtn.onclick = e => {
+    e.stopPropagation();
+    const images = document.querySelectorAll("#podglad img");
+    currentIndex = (currentIndex + 1) % images.length;
+    lightboxImg.src = images[currentIndex].src;
+  };
+
+  // Klawiatura
+  document.addEventListener("keydown", e => {
+    if (lightbox.style.display !== "flex") return;
+
+    if (e.key === "ArrowLeft") prevBtn.click();
+    if (e.key === "ArrowRight") nextBtn.click();
+    if (e.key === "Escape") closeBtn.click();
+  });
+
+});
         </script>
-               
+<!-- Lightbox zdjęć -->
+<div id="lightbox">
+  <button id="closeBtn">✕</button>
+  <button id="prevBtn" class="nav-btn">&#10094;</button>
+  <img id="lightbox-img">
+  <button id="nextBtn" class="nav-btn">&#10095;</button>
+</div>
+<div id="uploadOverlay">
+  <div class="spinner"></div>
+  <div class="upload-text">
+    <div class="upload-icon">📷</div>
+    <p>Wysyłanie zdjęcia...</p>
+  </div>
+</div>           
   </body>
 </html>
-
-
